@@ -1,0 +1,53 @@
+{
+  "name": "elisa",
+  "version": "0.1.0",
+  "description": "API for connecting to databases.",
+  "homepage": "http://elisajs.org",
+  "author": {
+    "name": "Justo Labs",
+    "email": "elisajs@justolabs.com",
+    "url": "http://justolabs.com"
+  },
+  "contributors": [
+    {
+      "name": "Raúl G. González",
+      "email": "raulggonzalez@elisajs.org",
+      "url": ""
+    }
+  ],
+  "keywords": [],
+  "bugs": {
+    "url": "https://github.com/elisajs/elisa/issues",
+    "email": "issues@elisajs.org"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/elisajs/elisa.git"
+  },
+  "engines": {
+    "node": ">= 5.0.0",
+    "npm": ">= 3.0.0"
+  },
+  "dependencies": {
+    "deasync": "*"
+  },
+  "peerDependencies": {},
+  "devDependencies": {
+    "babel-preset-es2015": "*",
+    "justo": "*",
+    "justo-assert": "*",
+    "justo-spy": "*",
+    "justo-plugin-babel": "*",
+    "justo-plugin-fs": "*",
+    "justo-plugin-jshint": "*",
+    "justo-plugin-npm": "*"
+  },
+  "preferGlobal": false,
+  "main": "index.js",
+  "files": [
+    "lib/"
+  ],
+  "scripts": {
+    "test": "justo test"
+  }
+}

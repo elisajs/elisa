@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/elisajs/elisa.svg?branch=master)](https://travis-ci.org/elisajs/elisa)
+[![Build Status](https://travis-ci.org/elisajs/elisa-core.svg?branch=master)](https://travis-ci.org/elisajs/elisa-core)
 
 API for accessing to databases.
 
