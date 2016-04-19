@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/elisajs/elisa-core.svg?branch=master)](https://travis-ci.org/elisajs/elisa-core)
+[![Build Status](https://travis-ci.org/elisajs/elisa.svg?branch=master)](https://travis-ci.org/elisajs/elisa)
 
 API for accessing to databases.
 
@@ -300,12 +300,12 @@ To get a schema object, we can use the following methods of the database object:
 
 ```
 //sync connection
-getSchema(name : string) : Schema
-findSchema(name : string) : Schema
+getSchema(name : string, opts ?: object) : Schema
+findSchema(name : string, opts ?: object) : Schema
 
 //async connection
-getSchema(name : string) : Schema
-findSchema(name : string, callback : function(error, sch))
+getSchema(name : string, opts ?: object) : Schema
+findSchema(name : string, opts ?: object, callback : function(error, sch))
 ```
 
 The first method, `getSchema()`, doesn't check whether the schema exists.
@@ -323,6 +323,13 @@ var hr = db.getSchema("hr");
 db.findSchema("hr", function(error, sch) {
   ...  
 });
+```
+
+The `opts` is used to set specific issues of the driver. For example, with the *PouchDB* driver,
+we can indicate the design document name into `opts`, whose default value is the schema name:
+
+```
+var hr = db.getSchema("hr", {design: "hr"});
 ```
 
 If we only need to know if a schema exists, we can use the `Database.hasSchema()` method:
@@ -345,22 +352,22 @@ To get a store object, we must use the following methods:
 
 ```
 //sync connection
-db.getStore(schema : string, store : string) : Store
-db.getStore(qn : string) : Store
-db.findStore(schema : string, store : string) : Store
-db.findStore(qn : string) : Store
+db.getStore(schema : string, store : string, opts ?: object) : Store
+db.getStore(qn : string, opts ?: object) : Store
+db.findStore(schema : string, store : string, opts ?: object) : Store
+db.findStore(qn : string, opts ?: object) : Store
 
-schema.getStore(name : string) : Store
-schema.findStore(name : string) : Store
+schema.getStore(name : string, opts ?: object) : Store
+schema.findStore(name : string, opts ?: object) : Store
 
 //async connection
-db.getStore(schema : string, store : string) : Store
-db.getStore(qn : string) : Store
-db.findStore(schema : string, store : string, callback : function(error, store))
-db.findStore(qn : string, callback : function(error, store))
+db.getStore(schema : string, store : string, opts ?: object) : Store
+db.getStore(qn : string, opts ?: object) : Store
+db.findStore(schema : string, store : string, opts?: object, callback : function(error, store))
+db.findStore(qn : string, opts ?: object, callback : function(error, store))
 
-schema.getStore(name : string) : Store
-schema.findStore(name : string, callback : function(error, store))
+schema.getStore(name : string, opts ?: object) : Store
+schema.findStore(name : string, opts ?: object, callback : function(error, store))
 ```
 
 The `getStore()` method doesn't check whether the store exists. `findStore()` does it.
@@ -377,6 +384,14 @@ var emp = db.getStore("hr.Employee");
 db.findStore("hr.Employee", function(error, emp) {
   ...
 });
+```
+
+As with `getSchema()` and `findSchema()`, with `getStore()` and `findStore()` we can set specific issues
+of the DBMS. For example, the *PouchDB* driver allows to set the view name using the
+`view` parameter. Example:
+
+```
+var emp = db.getStore("hr.Employee", {design: "hr", view: "employee"});
 ```
 
 To know if a store exists, we can use the `hasStore()` method:
@@ -602,22 +617,22 @@ To get a collection object, we must use the following methods:
 
 ```
 //sync connection
-db.getCollection(schema : string, coll : string) : Collection
-db.getCollection(qn : string) : Collection
-db.findCollection(schema : string, coll : string) : Collection
-db.findCollection(qn : string) : Collection
+db.getCollection(schema : string, coll : string, opts ?: object) : Collection
+db.getCollection(qn : string, opts ?: object) : Collection
+db.findCollection(schema : string, coll : string, opts ?: object) : Collection
+db.findCollection(qn : string, opts ?: object) : Collection
 
-schema.getCollection(name : string) : Collection
-schema.findCollection(name : string) : Collection
+schema.getCollection(name : string, opts ?: object) : Collection
+schema.findCollection(name : string, opts ?: object) : Collection
 
 //async connection
-db.getCollection(schema : string, coll : string) : Collection
-db.getCollection(qn : string) : Collection
-db.findCollection(schema : string, coll : string, callback : function(error, coll))
-db.findCollection(qn : string, callback : function(error, coll))
+db.getCollection(schema : string, coll : string, opts ?: object) : Collection
+db.getCollection(qn : string, opts ?: object) : Collection
+db.findCollection(schema : string, coll : string, opts ?: object, callback : function(error, coll))
+db.findCollection(qn : string, opts ?: object, callback : function(error, coll))
 
-schema.getCollection(name : string) : Collection
-schema.findCollection(name : string, callback : function(error, coll))
+schema.getCollection(name : string, opts ?: object) : Collection
+schema.findCollection(name : string, opts ?: object, callback : function(error, coll))
 ```
 
 The `getCollection()` method doesn't check whether the collection exists. `findCollection()` does it.

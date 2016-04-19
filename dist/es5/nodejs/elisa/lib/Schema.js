@@ -20,7 +20,8 @@ Schema = function () {
 
 
 
-  function Schema(database, name) {_classCallCheck(this, Schema);
+
+  function Schema(database, name, opts) {_classCallCheck(this, Schema);
     Object.defineProperty(this, "database", { value: database, enumerable: true });
     Object.defineProperty(this, "name", { value: name, enumerable: true });
     Object.defineProperty(this, "connection", { value: database.connection });

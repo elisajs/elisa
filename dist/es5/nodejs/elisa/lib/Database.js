@@ -57,6 +57,7 @@ Database = function () {
 
 
 
+
     {
       throw new Error("Abstract method.");} }, { key: "hasSchema", value: function hasSchema(
 
@@ -100,9 +101,23 @@ Database = function () {
 
 
 
-    name, callback) {var _this2 = this;
-      if (this.sync) return (0, _sync2.default)(function (done) {return _this2.readSchema(name, done);});else 
-      this.readSchema(name, callback);} }, { key: "readSchema", value: function readSchema() 
+
+
+    name) {var _this2 = this;
+      var opts, callback;for (var _len = arguments.length, rest = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {rest[_key - 1] = arguments[_key];}
+
+
+      if (rest.length == 1) {
+        if (rest[0] instanceof Function) callback = rest[0];else 
+        opts = rest[0];} else 
+      if (rest.length >= 2) {
+        opts = rest[0];callback = rest[1];}
+
+
+
+      if (this.sync) return (0, _sync2.default)(function (done) {return _this2.readSchema(name, opts, done);});else 
+      this.readSchema(name, opts, callback);} }, { key: "readSchema", value: function readSchema() 
+
 
 
 
@@ -134,7 +149,7 @@ Database = function () {
 
 
     {
-      var sch, store, opts;for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {args[_key] = arguments[_key];}
+      var sch, store, opts;for (var _len2 = arguments.length, args = Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {args[_key2] = arguments[_key2];}
 
 
       if (args.length == 1) {var _destructureDataStore = 
@@ -151,7 +166,7 @@ Database = function () {
 
 
 
-      return this.getSchema(sch).getStore(store, opts);} }, { key: "hasStore", value: function hasStore() 
+      return this.getSchema(sch, opts).getStore(store, opts);} }, { key: "hasStore", value: function hasStore() 
 
 
 
@@ -176,7 +191,7 @@ Database = function () {
 
 
     {
-      var schema, store, callback;for (var _len2 = arguments.length, args = Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {args[_key2] = arguments[_key2];}
+      var schema, store, callback;for (var _len3 = arguments.length, args = Array(_len3), _key3 = 0; _key3 < _len3; _key3++) {args[_key3] = arguments[_key3];}
 
 
       if (args.length == 1) {var _destructureDataStore5 = 
@@ -223,7 +238,7 @@ Database = function () {
 
 
     {
-      var schema, store, opts, callback;for (var _len3 = arguments.length, args = Array(_len3), _key3 = 0; _key3 < _len3; _key3++) {args[_key3] = arguments[_key3];}
+      var schema, store, opts, callback;for (var _len4 = arguments.length, args = Array(_len4), _key4 = 0; _key4 < _len4; _key4++) {args[_key4] = arguments[_key4];}
 
 
       if (args.length == 1) {var _destructureDataStore9 = 
@@ -258,7 +273,7 @@ Database = function () {
 
 
 
-      return this.getSchema(schema).findStore(store, opts, callback);} }, { key: "getCollection", value: function getCollection() 
+      return this.getSchema(schema, opts).findStore(store, opts, callback);} }, { key: "getCollection", value: function getCollection() 
 
 
 
@@ -277,7 +292,7 @@ Database = function () {
 
 
     {
-      var sch, coll, opts;for (var _len4 = arguments.length, args = Array(_len4), _key4 = 0; _key4 < _len4; _key4++) {args[_key4] = arguments[_key4];}
+      var sch, coll, opts;for (var _len5 = arguments.length, args = Array(_len5), _key5 = 0; _key5 < _len5; _key5++) {args[_key5] = arguments[_key5];}
 
 
       if (args.length == 1) {var _destructureDataStore17 = 
@@ -294,7 +309,7 @@ Database = function () {
 
 
 
-      return this.getSchema(sch).getCollection(coll, opts);} }, { key: "hasCollection", value: function hasCollection() 
+      return this.getSchema(sch, opts).getCollection(coll, opts);} }, { key: "hasCollection", value: function hasCollection() 
 
 
 
@@ -319,7 +334,7 @@ Database = function () {
 
 
     {
-      var schema, coll, callback;for (var _len5 = arguments.length, args = Array(_len5), _key5 = 0; _key5 < _len5; _key5++) {args[_key5] = arguments[_key5];}
+      var schema, coll, callback;for (var _len6 = arguments.length, args = Array(_len6), _key6 = 0; _key6 < _len6; _key6++) {args[_key6] = arguments[_key6];}
 
 
       if (args.length == 1) {var _destructureDataStore21 = 
@@ -367,7 +382,7 @@ Database = function () {
 
 
     {
-      var schema, coll, opts, callback;for (var _len6 = arguments.length, args = Array(_len6), _key6 = 0; _key6 < _len6; _key6++) {args[_key6] = arguments[_key6];}
+      var schema, coll, opts, callback;for (var _len7 = arguments.length, args = Array(_len7), _key7 = 0; _key7 < _len7; _key7++) {args[_key7] = arguments[_key7];}
 
 
       if (args.length == 1) {var _destructureDataStore25 = 
@@ -402,4 +417,4 @@ Database = function () {
 
 
 
-      return this.getSchema(schema).findCollection(coll, opts, callback);} }]);return Database;}();exports.default = Database;
+      return this.getSchema(schema, opts).findCollection(coll, opts, callback);} }]);return Database;}();exports.default = Database;
