@@ -397,8 +397,10 @@ DataStore = function () {
 
 
 
+
+
     query) {var _this8 = this;
-      var opts, callback;for (var _len7 = arguments.length, args = Array(_len7 > 1 ? _len7 - 1 : 0), _key7 = 1; _key7 < _len7; _key7++) {args[_key7 - 1] = arguments[_key7];}
+      var opts, callback, nop;for (var _len7 = arguments.length, args = Array(_len7 > 1 ? _len7 - 1 : 0), _key7 = 1; _key7 < _len7; _key7++) {args[_key7 - 1] = arguments[_key7];}
 
 
       if (args.length == 1) {
@@ -408,9 +410,16 @@ DataStore = function () {
         opts = args[0];callback = args[1];}
 
 
+      nop = Object.keys(query).length === 0;
 
-      if (this.sync) return (0, _sync2.default)(function (done) {return _this8._remove(query, opts, done);});else 
-      this._remove(query, opts, callback);} }, { key: "_remove", value: function _remove() 
+
+      if (this.sync) {
+        if (nop) return;else 
+        return (0, _sync2.default)(function (done) {return _this8._remove(query, opts, done);});} else 
+      {
+        if (nop) process.nextTick(function () {if (callback) callback();});else 
+        this._remove(query, opts, callback);}} }, { key: "_remove", value: function _remove() 
+
 
 
 
@@ -423,4 +432,42 @@ DataStore = function () {
 
 
     {
+      throw new Error("Abstract method.");} }, { key: "truncate", value: function truncate() 
+
+
+
+
+
+
+
+
+
+
+
+
+    {var _this9 = this;
+      var opts, callback;for (var _len8 = arguments.length, args = Array(_len8), _key8 = 0; _key8 < _len8; _key8++) {args[_key8] = arguments[_key8];}
+
+
+      if (args.length == 1) {
+        if (args[0] instanceof Function) callback = args[0];else 
+        opts = args[0];} else 
+      if (args.length >= 2) {
+        opts = args[0];callback = args[1];}
+
+
+
+      if (this.sync) return (0, _sync2.default)(function (done) {return _this9._truncate(opts, done);});else 
+      this._truncate(opts, callback || function () {});} }, { key: "_truncate", value: function _truncate(
+
+
+
+
+
+
+
+
+
+
+    opts, callback) {
       throw new Error("Abstract method.");} }, { key: "database", get: function get() {return this.schema.database;} }, { key: "db", get: function get() {return this.database;} }, { key: "connection", get: function get() {return this.db.connection;} }, { key: "qualifiedName", get: function get() {return this.schema.qn + "." + this.name;} }, { key: "qn", get: function get() {return this.qualifiedName;} }, { key: "fullQualifiedName", get: function get() {return this.schema.fqn + "." + this.name;} }, { key: "fqn", get: function get() {return this.fullQualifiedName;} }]);return DataStore;}();exports.default = DataStore;

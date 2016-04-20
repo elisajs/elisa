@@ -8,8 +8,6 @@ API for accessing to databases.
 
 **Elisa** is an API for connecting to databases.
 
-Official site: [elisajs.org](http://elisajs.org).
-
 Her features are:
 
 - This is independent of the DBMS. A query using an *Elisa* driver must return
@@ -22,6 +20,10 @@ Her features are:
 - This has a synchronous API and other asynchronous.
 - This is easy for learning.
 - This is simple for using.
+
+Spec: 0.2
+
+Official site: [elisajs.org](http://elisajs.org).
 
 # Preview examples
 
@@ -588,10 +590,10 @@ To remove an item, we must use the `remove()` method:
 
 ```
 //sync connection
-remove({id: "key"})
+remove({id: "key"}, opts ?: object)
 
 //async connection
-remove({id: "key"}, callback ?: function(error))
+remove({id: "key"}, opts ?: object, callback ?: function(error))
 ```
 
 Example:
@@ -604,6 +606,16 @@ bands.remove({id: "The National"});
 bands.remove({id: "The National"}, function(error) {
   ...
 });
+```
+
+To remove all the items, we must use the `truncate()` method:
+
+```
+//sync connection
+truncate(opts ?: object)
+
+//async connection
+truncate(opts ? object, callback ?: function(error))
 ```
 
 # Collections
@@ -815,10 +827,10 @@ To remove an item, we must use the `remove()` method:
 
 ```
 //sync connection
-remove(filter : object)
+remove(filter : object, opts ?: object)
 
 //async connection
-remove(filter : object, callback ?: function(error))
+remove(filter : object, opts ?: object, callback ?: function(error))
 ```
 
 Example:
@@ -832,6 +844,20 @@ bands.remove({name: "The National"}, function(error) {
   ...
 });
 ```
+
+To empty the collection, the `truncate()` method:
+
+```
+//sync connection
+truncate(opts ?: object)
+
+//async connection
+truncate(opts ?: object, callback ?: function(error))
+```
+
+**Note**. If we execute `remove({})`, nothing is removed. This is the way
+to prevent programming errors. To empty the collection, we must use
+the `truncate()` method.
 
 ## Collection query
 
