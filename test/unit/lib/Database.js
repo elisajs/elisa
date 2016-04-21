@@ -10,7 +10,7 @@ const Database = require("../../../dist/es5/nodejs/elisa/lib/Database").default;
 suite("Database", function() {
   var db;
 
-  init(function() {
+  init({title: "Create Database instance"}, function() {
     db = new Database({}, "mydb");
   });
 

@@ -13,7 +13,7 @@ const CollectionQuery = require("../../../dist/es5/nodejs/elisa").CollectionQuer
 suite("CollectionQuery", function() {
   var q;
 
-  init("*", function() {
+  init({name: "*", title: "Get query"}, function() {
     q = spy(new CollectionQuery(new Collection({}, "coll")), ["run() {}"]);
   });
 

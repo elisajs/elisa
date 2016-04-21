@@ -1,4 +1,6 @@
 [![Build Status](https://travis-ci.org/elisajs/elisa.svg?branch=master)](https://travis-ci.org/elisajs/elisa)
+[![Dependency Status](https://david-dm.org/elisajs/elisa.svg)](https://david-dm.org/elisajs/elisa)
+[![devDependency Status](https://david-dm.org/elisajs/elisa/dev-status.svg)](https://david-dm.org/elisajs/elisa#info=devDependencies)
 
 API for accessing to databases.
 

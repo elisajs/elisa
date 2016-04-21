@@ -39,7 +39,7 @@ suite("Driver", function() {
   suite("#getDriver()", function() {
     var drv;
 
-    init(function() {
+    init({title: "Register driver"}, function() {
       Driver.register((drv = new Driver("TheDriver", "TheAlias")));
     });
 
