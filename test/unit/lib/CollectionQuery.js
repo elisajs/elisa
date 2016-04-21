@@ -6,6 +6,7 @@ const test = justo.test;
 const init = justo.init;
 const fin = justo.fin;
 const spy = require("justo-spy");
+const Collection = require("../../../dist/es5/nodejs/elisa").Collection;
 const CollectionQuery = require("../../../dist/es5/nodejs/elisa").CollectionQuery;
 
 //suite
@@ -13,7 +14,7 @@ suite("CollectionQuery", function() {
   var q;
 
   init("*", function() {
-    q = spy(new CollectionQuery({}), "run() {}");
+    q = spy(new CollectionQuery(new Collection({}, "coll")), ["run() {}"]);
   });
 
   suite("#project()", function() {

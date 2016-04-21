@@ -54,8 +54,16 @@ CollectionQuery = function () {
 
 
     cond) {
+      var src = this.source;
+
+
+      if (src.hasInjection()) cond = src.injectInto(cond);
+
+
       delete this.condition;
       Object.defineProperty(this, "condition", { value: cond, configurable: true });
+
+
       return this;} }, { key: "limit", value: function limit(
 
 
@@ -199,6 +207,7 @@ CollectionQuery = function () {
 
 
     {var _this = this;
+      var src = this.source;
       var opts, callback;for (var _len5 = arguments.length, args = Array(_len5), _key5 = 0; _key5 < _len5; _key5++) {args[_key5] = arguments[_key5];}
 
 

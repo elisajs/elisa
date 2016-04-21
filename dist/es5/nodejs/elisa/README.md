@@ -18,10 +18,11 @@ Her features are:
 - This can work with key-value stores (*Redis*) and document collections (*CouchDB*, *PouchDB* and *MongoDB*).
   Proximately, *Elisa* is going to support SQL databases (*PostgreSQL*, *SQL Server*, *SQLite*, etc.).
 - This has a synchronous API and other asynchronous.
+- This supports the field value injection to ease the query writing.
 - This is easy for learning.
 - This is simple for using.
 
-Spec: 0.2
+Spec: 0.3
 
 Official site: [elisajs.org](http://elisajs.org).
 
@@ -992,3 +993,37 @@ q.project("name").find({tags: {$contain: "indie"}}, function(error, res) {
   }
 });
 ```
+
+
+# Injections
+
+*Elisa* allows to inject fields/columns to the data store queries:
+
+- Stores into `insert()`. Remember that the finds, the updates and the removes are always using the
+  `id` field, for this reason, the injection not needed.
+- Collections into `find()`, `findOne()`, `insert()`, `update()` and `remove()`.
+
+The injection is indicated in `getStore()`, `findStore()`, `getCollection()` or `findCollection()`,
+using the `inject` option:
+
+```
+inject: {
+  prop1: value,
+  prop2: value,
+  ...
+}
+```
+
+Example:
+
+```
+var posts = db.getCollection("blog.posts", {
+  inject: {
+    authorId: session.userId
+  }
+});
+```
+
+When we query the collection, the `authorId` is set by the driver automatically. So,
+`posts.find({})` is similar to `posts.find({authorId: theValue})`.
+Other example: `posts.insert({text: "The text."})` is similar to `posts.insert({authorId: theValue, text: "The text."})`.
