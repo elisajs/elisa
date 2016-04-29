@@ -1,3 +1,4 @@
+[![NPM version](http://img.shields.io/npm/v/elisa.svg)](https://www.npmjs.org/package/elisa)
 [![Build Status](https://travis-ci.org/elisajs/elisa.svg?branch=master)](https://travis-ci.org/elisajs/elisa)
 [![Dependency Status](https://david-dm.org/elisajs/elisa.svg)](https://david-dm.org/elisajs/elisa)
 [![devDependency Status](https://david-dm.org/elisajs/elisa/dev-status.svg)](https://david-dm.org/elisajs/elisa#info=devDependencies)
@@ -27,6 +28,18 @@ Her features are:
 Spec: 0.3.1
 
 Official site: [elisajs.org](http://elisajs.org).
+
+# Table of contents
+
+- [Preview examples](#preview-examples)
+- [Drivers](#drivers)
+- [Connections](#connections)
+- [Server](#server)
+- [Databases](#databases)
+- [Schemas](#schemas)
+- [Key-value stores](#key-value-stores)
+- [Document collection](#document-collections)
+- [Injections](#injections)
 
 # Preview examples
 
@@ -185,7 +198,7 @@ var cx = driver.createConnection({type: "sync"}, {host: "localhost", port: 5984,
 
 The connection options are driver dependent.
 
-## Opening a connection
+## Opening connections
 
 Once we have the connection object, we have to open it, using its `open()` method:
 
@@ -347,7 +360,7 @@ hasSchema(name : string) : boolean
 hasSchema(name : string, callback : function(error, exists))
 ```
 
-# Stores
+# Key-value stores
 
 A **store** is a data container where every data has a key and a value. If the DBMS doesn't support
 this concept natively, the driver should do it. So for example, *PouchDB* and *MongoDB* don't support
@@ -621,7 +634,7 @@ truncate(opts ?: object)
 truncate(opts ? object, callback ?: function(error))
 ```
 
-# Collections
+# Document collections
 
 A **collection** is a document container. If the DBMS doesn't support this
 concept natively, the driver should do it. For example, *PouchDB* and *CouchDB*
