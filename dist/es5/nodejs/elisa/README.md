@@ -24,7 +24,7 @@ Her features are:
 - This is easy for learning.
 - This is simple for using.
 
-Spec: 0.3
+Spec: 0.3.1
 
 Official site: [elisajs.org](http://elisajs.org).
 
@@ -784,6 +784,8 @@ The filter object sets a condition to restrict the documents to return. The oper
 - `{field: {$nlike: value}}`. The field doesn't match a pattern. Alias: `$notLike`.
 - `{field: {$contain: value}}`. The field contains a value.
 - `{field: {$ncontain: value}}`. The field doesn't contain a value. Alias: `$notContain`.
+- `{field: {$in: value}}`. The field is into an array value.
+- `{field: {$nin: value}}`. The field is not into an array value. Alias: `$notIn`.
 
 The format is very simple:
 
