@@ -88,7 +88,7 @@ Store = function (_DataStore) {_inherits(Store, _DataStore);function Store() {_c
 
 
 
-      if (this.sync) return (0, _sync2.default)(function (done) {return _this3._insert(docs, opts, done);});else 
+      if (this.sync) (0, _sync2.default)(function (done) {return _this3._insert(docs, opts, done);});else 
       this._insert(docs, opts, callback || function () {});} }, { key: "_insert", value: function _insert() 
 
 

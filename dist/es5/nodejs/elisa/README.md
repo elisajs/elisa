@@ -19,13 +19,11 @@ Her features are:
 - This has the same API for the browser and *Node.js*. So, the developers can
   access to databases using the same code in the browser app and the Node.js app.
 - This can work with key-value stores (*Redis*) and document collections (*CouchDB*, *PouchDB* and *MongoDB*).
-  Proximately, *Elisa* is going to support SQL databases (*PostgreSQL*, *SQL Server*, *SQLite*, etc.).
-- This has a synchronous API and other asynchronous.
+  Proximately, *Elisa* is going to support SQL databases (*MySQL*, *MariaDB*, *PostgreSQL*, *SQL Server*, *SQLite*, etc.).
+- This has a synchronous API and an asynchronous one.
 - This supports the field value injection to ease the query writing.
 - This is easy for learning.
 - This is simple for using.
-
-Spec: 0.3.1
 
 Official site: [elisajs.org](http://elisajs.org).
 
@@ -36,7 +34,7 @@ Official site: [elisajs.org](http://elisajs.org).
 - [Connections](#connections)
 - [Server](#server)
 - [Databases](#databases)
-- [Schemas](#schemas)
+- [Namespaces](#namespaces)
 - [Key-value stores](#key-value-stores)
 - [Document collection](#document-collections)
 - [Injections](#injections)
@@ -148,21 +146,23 @@ for (let band of res.docs) console.log(band.id, band.name, band.year);
 A **driver** is a component enabling a browser/Node.js app to interact with databases.
 The *Elisa* driver is an analogous concept to the JDBC/ODBC/ADO.NET drivers.
 
-To connect a database, firstly we have to load its driver. We must use the
+To connect a database, first we have to load its driver. We must use the
 `Driver` class, concretely its `getDriver()` method:
 
 ```
 getDriver(name : string) : Driver
 ```
 
-Next, we show an example to get the *PouchDB* driver:
+Next, we show an example to get the *PouchDB* driver and the *MySQL* driver:
 
 ```
-//load PouchDB driver
-const Driver = require("elisa-pouchdb").Driver;
+//PouchDB driver
+const Driver = require("elisa-pouchdb").Driver; //load
+var driver = Driver.getDriver("PouchDB");       //get
 
-//get the PouchDB driver
-var driver = Driver.getDriver("PouchDB");
+//MySQL driver
+const Driver = require("elisa-mysql").Driver;   //load
+var driver = Driver.getDriver("MySQL");         //get
 ```
 
 First, we have to get the `Driver` class of the driver package. Next, we have
@@ -196,7 +196,13 @@ var cx = driver.createConnection({host: "localhost", port: 5984, db: "testing"})
 var cx = driver.createConnection({type: "sync"}, {host: "localhost", port: 5984, db: "testing"});
 ```
 
-The connection options are driver dependent.
+The connection options are driver dependent. Some common options are:
+
+- `host` (string). The DBMS server.
+- `port` (number). The DBMS port.
+- `db` (string). The database.
+- `username` (string). The username.
+- `password` (string). The user password.
 
 ## Opening connections
 
@@ -293,6 +299,12 @@ This object contains the following properties:
 - `port` (number). The server port.
 - `version` (string). The server version.
 
+For example, on *MariaDB*, we could get:
+
+```
+console.dir(cx.server.server); //{ host: 'localhost', port: 3306, version: '10.1.14-MariaDB' }
+```
+
 # Databases
 
 The **database** is an object to represent a database in the database server.
@@ -308,94 +320,96 @@ Example:
 console.log(cx.db.name);
 ```
 
-# Schemas
+# Namespaces
 
-A **schema** is a logical container of database objects. If the DBMS doesn't support
-this concept, the driver must implement it. So for example, *PouchDB* doesn't support
-the schema concept, but its *Elisa* driver does it.
+A **namespace** is a logical container of database objects. If the DBMS doesn't support
+this concept, the driver must implement it. So for example, *MariaDB*, *MySQL* and *PouchDB* don't support
+the namespace concept, but their *Elisa* drivers do.
 
-To get a schema object, we can use the following methods of the database object:
+On *SQL*, a namespace is similar to a **schema**.
+
+To get a namespace object, we can use the following methods of the database object:
 
 ```
 //sync connection
-getSchema(name : string, opts ?: object) : Schema
-findSchema(name : string, opts ?: object) : Schema
+getNamespace(name : string, opts ?: object) : Namespace
+findNamespace(name : string, opts ?: object) : Namespace
 
 //async connection
-getSchema(name : string, opts ?: object) : Schema
-findSchema(name : string, opts ?: object, callback : function(error, sch))
+getNamespace(name : string, opts ?: object) : Namespace
+findNamespace(name : string, opts ?: object, callback : function(error, ns))
 ```
 
-The first method, `getSchema()`, doesn't check whether the schema exists.
-The second one, `findSchema()`, does it.
+The first method, `getNamespace()`, doesn't check whether the namespace exists.
+The second one, `findNamespace()`, does it.
 
 Example:
 
 ```
 //sync connection
-var hr = db.getSchema("hr");
-var hr = db.findSchema("hr");
+var hr = db.getNamespace("hr");
+var hr = db.findNamespace("hr");
 
 //async connection
-var hr = db.getSchema("hr");
-db.findSchema("hr", function(error, sch) {
+var hr = db.getNamespace("hr");
+db.findNamespace("hr", function(error, ns) {
   ...  
 });
 ```
 
 The `opts` is used to set specific issues of the driver. For example, with the *PouchDB* driver,
-we can indicate the design document name into `opts`, whose default value is the schema name:
+we can indicate the design document name into `opts`, whose default value is the namespace name:
 
 ```
-var hr = db.getSchema("hr", {design: "hr"});
+var hr = db.getNamespace("hr", {design: "hr"});
 ```
 
-If we only need to know if a schema exists, we can use the `Database.hasSchema()` method:
+If we only need to know if a namespace exists, we can use the `Database.hasNamespace()` method:
 
 ```
 //sync connection
-hasSchema(name : string) : boolean
+hasNamespace(name : string) : boolean
 
 //async connection
-hasSchema(name : string, callback : function(error, exists))
+hasNamespace(name : string, callback : function(error, exists))
 ```
 
 # Key-value stores
 
 A **store** is a data container where every data has a key and a value. If the DBMS doesn't support
-this concept natively, the driver should do it. So for example, *PouchDB* and *MongoDB* don't support
+this concept natively, the driver should do it. So for example, *MariaDB*, *MongoDB*, *MySQL* and *PouchDB* don't support
 the stores, but their drivers do it.
 
 To get a store object, we must use the following methods:
 
 ```
 //sync connection
-db.getStore(schema : string, store : string, opts ?: object) : Store
+db.getStore(ns : string, store : string, opts ?: object) : Store
 db.getStore(qn : string, opts ?: object) : Store
-db.findStore(schema : string, store : string, opts ?: object) : Store
+db.findStore(ns : string, store : string, opts ?: object) : Store
 db.findStore(qn : string, opts ?: object) : Store
 
-schema.getStore(name : string, opts ?: object) : Store
-schema.findStore(name : string, opts ?: object) : Store
+ns.getStore(name : string, opts ?: object) : Store
+ns.findStore(name : string, opts ?: object) : Store
 
 //async connection
-db.getStore(schema : string, store : string, opts ?: object) : Store
+db.getStore(ns : string, store : string, opts ?: object) : Store
 db.getStore(qn : string, opts ?: object) : Store
-db.findStore(schema : string, store : string, opts?: object, callback : function(error, store))
+db.findStore(ns : string, store : string, opts?: object, callback : function(error, store))
 db.findStore(qn : string, opts ?: object, callback : function(error, store))
 
-schema.getStore(name : string, opts ?: object) : Store
-schema.findStore(name : string, opts ?: object, callback : function(error, store))
+ns.getStore(name : string, opts ?: object) : Store
+ns.findStore(name : string, opts ?: object, callback : function(error, store))
 ```
 
-The `getStore()` method doesn't check whether the store exists. `findStore()` does it.
+The `getStore()` method doesn't check whether the store exists; but `findStore()` does.
 
 Examples:
 
 ```
 //sync connection
-var emp = db.getStore("hr.Employee");
-var emp = db.findStore("hr.Employee");
+var emp = db.getStore("hr.Employee"); //if no namespace is needed, db.getStore("Employee")
+var emp = db.findStore("hr.Employee");//if no namespace is needed, db.findStore("Employee")
 
 //async connection
 var emp = db.getStore("hr.Employee");
@@ -404,7 +418,7 @@ db.findStore("hr.Employee", function(error, emp) {
 });
 ```
 
-As with `getSchema()` and `findSchema()`, with `getStore()` and `findStore()` we can set specific issues
+As with `getNamespace()` and `findNamespace()`, with `getStore()` and `findStore()` we can set specific issues
 of the DBMS. For example, the *PouchDB* driver allows to set the view name using the
 `view` parameter. Example:
 
@@ -416,20 +430,22 @@ To know if a store exists, we can use the `hasStore()` method:
 
 ```
 //sync connection
-Database.hasStore(schema : string, store : string) : boolean
+Database.hasStore(ns : string, store : string) : boolean
 Database.hasStore(qn : string) : boolean
-Schema.hasStore(name : string) : boolean
+Namespace.hasStore(name : string) : boolean
 
 //async connection
-Database.hasStore(schema : string, store : string, callback : function(error, exists))
+Database.hasStore(ns : string, store : string, callback : function(error, exists))
 Database.hasStore(qn : string, callback : function(error, exists))
-Schema.hasStore(name : string, callback : function(error, exists))
+Namespace.hasStore(name : string, callback : function(error, exists))
 ```
 
 ## FQN and QN
 
-The **full qualified name** (FQN) is the full name to a store object: `db.schema.store`. The
-**qualified name** (QN) is the partial name: `schema.store`.
+The **full qualified name** (FQN) is the full name to a store object: `db.namespace.store`. The
+**qualified name** (QN) is the partial name: `namespace.store`.
+
+If no namespace is needed, the FQN is `db.store`; and the QN, `store`.
 
 ## Inserting items
 
@@ -645,22 +661,22 @@ To get a collection object, we must use the following methods:
 
 ```
 //sync connection
-db.getCollection(schema : string, coll : string, opts ?: object) : Collection
+db.getCollection(ns : string, coll : string, opts ?: object) : Collection
 db.getCollection(qn : string, opts ?: object) : Collection
-db.findCollection(schema : string, coll : string, opts ?: object) : Collection
+db.findCollection(ns : string, coll : string, opts ?: object) : Collection
 db.findCollection(qn : string, opts ?: object) : Collection
 
-schema.getCollection(name : string, opts ?: object) : Collection
-schema.findCollection(name : string, opts ?: object) : Collection
+ns.getCollection(name : string, opts ?: object) : Collection
+ns.findCollection(name : string, opts ?: object) : Collection
 
 //async connection
-db.getCollection(schema : string, coll : string, opts ?: object) : Collection
+db.getCollection(ns : string, coll : string, opts ?: object) : Collection
 db.getCollection(qn : string, opts ?: object) : Collection
-db.findCollection(schema : string, coll : string, opts ?: object, callback : function(error, coll))
+db.findCollection(ns : string, coll : string, opts ?: object, callback : function(error, coll))
 db.findCollection(qn : string, opts ?: object, callback : function(error, coll))
 
-schema.getCollection(name : string, opts ?: object) : Collection
-schema.findCollection(name : string, opts ?: object, callback : function(error, coll))
+ns.getCollection(name : string, opts ?: object) : Collection
+ns.findCollection(name : string, opts ?: object, callback : function(error, coll))
 ```
 
 The `getCollection()` method doesn't check whether the collection exists. `findCollection()` does it.
@@ -683,14 +699,14 @@ To know if a collection exists, we can use the `hasCollection()` method:
 
 ```
 //sync connection
-Database.hasCollection(schema : string, coll : string) : boolean
+Database.hasCollection(ns : string, coll : string) : boolean
 Database.hasCollection(qn : string) : boolean
-Schema.hasCollection(name : string) : boolean
+Namespace.hasCollection(name : string) : boolean
 
 //async connection
-Database.hasCollection(schema : string, coll : string, callback : function(error, exists))
+Database.hasCollection(ns : string, coll : string, callback : function(error, exists))
 Database.hasCollection(qn : string, callback : function(error, exists))
-Schema.hasCollection(name : string, callback : function(error, exists))
+Namespace.hasCollection(name : string, callback : function(error, exists))
 ```
 
 ## Inserting documents

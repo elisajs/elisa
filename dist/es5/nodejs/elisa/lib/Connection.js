@@ -105,8 +105,6 @@ Connection = function () {
 
 
 
-
-
     callback) {var _this = this;
       if (this.sync) return (0, _sync2.default)(function (done) {return _this._open(done);});else 
       if (this.async) this._open(callback);} }, { key: "_open", value: function _open() 
@@ -132,16 +130,6 @@ Connection = function () {
 
 
 
-
-
-
-
-
-
-
-
-
-
     callback) {var _this2 = this;
       if (this.sync) return (0, _sync2.default)(function (done) {return _this2._close(done);});else 
       if (this.async) return this._close(callback);} }, { key: "_close", value: function _close() 
@@ -156,6 +144,15 @@ Connection = function () {
 
     {
       throw new Error("Abstract method.");} }, { key: "connected", value: function connected(
+
+
+
+
+
+
+
+
+
 
 
 
@@ -210,4 +207,59 @@ Connection = function () {
 
 
     callback) {
-      throw new Error("Abstract method.");} }, { key: "sync", get: function get() {return this.type == "sync";} }, { key: "async", get: function get() {return this.type == "async";} }, { key: "mode", get: function get() {return this.options.mode || "rw";} }, { key: "readonly", get: function get() {return this.mode == "r";} }, { key: "rw", get: function get() {return this.mode == "rw";} }, { key: "server", get: function get() {throw new Error("Abstract property.");} }, { key: "database", get: function get() {throw new Error("Abstract property.");} }, { key: "db", get: function get() {return this.database;} }, { key: "opened", get: function get() {throw new Error("Abstract property.");} }, { key: "closed", get: function get() {return !this.opened;} }]);return Connection;}();exports.default = Connection;
+      throw new Error("Abstract method.");} }, { key: "getNamespaceClass", value: function getNamespaceClass() 
+
+
+
+
+
+
+
+
+
+    {
+      throw new Error("Abstract method.");} }, { key: "getServerClass", value: function getServerClass() 
+
+
+
+
+
+
+
+
+
+    {
+      throw new Error("Abstract method.");} }, { key: "getDatabaseClass", value: function getDatabaseClass() 
+
+
+
+
+
+
+
+
+
+    {
+      throw new Error("Abstract method.");} }, { key: "getStoreClass", value: function getStoreClass() 
+
+
+
+
+
+
+
+
+
+    {
+      throw new Error("Abstract method.");} }, { key: "getCollectionClass", value: function getCollectionClass() 
+
+
+
+
+
+
+
+
+
+    {
+      throw new Error("Abstract method.");} }, { key: "sync", get: function get() {return this.type == "sync";} }, { key: "async", get: function get() {return this.type == "async";} }, { key: "mode", get: function get() {return this.options.mode || "rw";} }, { key: "readonly", get: function get() {return this.mode == "r";} }, { key: "rw", get: function get() {return this.mode == "rw";} }, { key: "server", get: function get() {return new (this.getServerClass())(this);} }, { key: "database", get: function get() {return new (this.getDatabaseClass())(this, this.options.db);} }, { key: "db", get: function get() {return this.database;} }, { key: "opened", get: function get() {return !!this.client;} }, { key: "closed", get: function get() {return !this.opened;} }]);return Connection;}();exports.default = Connection;

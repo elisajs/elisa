@@ -28,8 +28,8 @@ suite("API", function() {
     pkg.Driver.must.be.instanceOf(Function);
   });
 
-  test("Schema", function() {
-    pkg.Schema.must.be.instanceOf(Function);
+  test("Namespace", function() {
+    pkg.Namespace.must.be.instanceOf(Function);
   });
 
   test("Server", function() {

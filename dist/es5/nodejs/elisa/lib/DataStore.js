@@ -1,4 +1,5 @@
 "use strict";Object.defineProperty(exports, "__esModule", { value: true });var _createClass = function () {function defineProperties(target, props) {for (var i = 0; i < props.length; i++) {var descriptor = props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if ("value" in descriptor) descriptor.writable = true;Object.defineProperty(target, descriptor.key, descriptor);}}return function (Constructor, protoProps, staticProps) {if (protoProps) defineProperties(Constructor.prototype, protoProps);if (staticProps) defineProperties(Constructor, staticProps);return Constructor;};}();
+var _Namespace = require("./Namespace");var _Namespace2 = _interopRequireDefault(_Namespace);
 var _sync = require("./sync");var _sync2 = _interopRequireDefault(_sync);function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function _classCallCheck(instance, Constructor) {if (!(instance instanceof Constructor)) {throw new TypeError("Cannot call a class as a function");}}var 
 
 
@@ -18,14 +19,37 @@ DataStore = function () {
 
 
 
-  function DataStore(schema, name, opts) {_classCallCheck(this, DataStore);
-    Object.defineProperty(this, "schema", { value: schema, enumerable: true });
+  function DataStore(base, name, opts) {_classCallCheck(this, DataStore);
+    if (base instanceof _Namespace2.default) {
+      Object.defineProperty(this, "database", { value: base.db, enumerable: true });
+      Object.defineProperty(this, "namespace", { value: base, enumerable: true });} else 
+    {
+      Object.defineProperty(this, "database", { value: base, enumerable: true });
+      Object.defineProperty(this, "namespace", { value: undefined, enumerable: true });}
+
+
     Object.defineProperty(this, "name", { value: name, enumerable: true });
-    Object.defineProperty(this, "sync", { value: schema.sync });
-    Object.defineProperty(this, "async", { value: schema.async });
+    Object.defineProperty(this, "sync", { value: base.sync });
+    Object.defineProperty(this, "async", { value: base.async });
 
     if (!opts) opts = {};
     Object.defineProperty(this, "inject", { value: opts.inject });}_createClass(DataStore, [{ key: "hasInjection", value: function hasInjection() 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -63,15 +87,6 @@ DataStore = function () {
 
 
       return q;} }, { key: "hasId", value: function hasId(
-
-
-
-
-
-
-
-
-
 
 
 
@@ -343,4 +358,4 @@ DataStore = function () {
 
 
     opts, callback) {
-      throw new Error("Abstract method.");} }, { key: "database", get: function get() {return this.schema.database;} }, { key: "db", get: function get() {return this.database;} }, { key: "connection", get: function get() {return this.db.connection;} }, { key: "qualifiedName", get: function get() {return this.schema.qn + "." + this.name;} }, { key: "qn", get: function get() {return this.qualifiedName;} }, { key: "fullQualifiedName", get: function get() {return this.schema.fqn + "." + this.name;} }, { key: "fqn", get: function get() {return this.fullQualifiedName;} }]);return DataStore;}();exports.default = DataStore;
+      throw new Error("Abstract method.");} }, { key: "ns", get: function get() {return this.namespace;} }, { key: "client", get: function get() {return this.connection.client;} }, { key: "db", get: function get() {return this.database;} }, { key: "connection", get: function get() {return this.db.connection;} }, { key: "qualifiedName", get: function get() {return (this.ns ? this.ns.qn + "." : "") + this.name;} }, { key: "qn", get: function get() {return this.qualifiedName;} }, { key: "fullQualifiedName", get: function get() {return (this.ns ? this.ns.fqn : this.db.name) + "." + this.name;} }, { key: "fqn", get: function get() {return this.fullQualifiedName;} }]);return DataStore;}();exports.default = DataStore;

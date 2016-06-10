@@ -14,21 +14,21 @@ suite("Database", function() {
     db = new Database({}, "mydb");
   });
 
-  suite("#destructureDataStoreQn()", function() {
-    test("destructureDataStoreQn(qn) - sch.ds", function() {
-      db.destructureDataStoreQn("sch.ds").must.be.eq(["sch", "ds"]);
-    });
-
-    test("destructureQn(qn) - sch", function() {
-      db.destructureDataStoreQn.must.raise("Invalid qualified name.", ["sch"]);
-    });
-
-    test("destructureQn(qn) - sch.", function() {
-      db.destructureDataStoreQn.must.raise("Invalid qualified name.", ["sch."]);
-    });
-
-    test("destructureQn(qn) - .ds", function() {
-      db.destructureDataStoreQn.must.raise("Invalid qualified name.", [".ds"]);
-    });
-  });
+  // suite("#destructureDataStoreQn()", function() {
+  //   test("destructureDataStoreQn(qn) - sch.ds", function() {
+  //     db.destructureDataStoreQn("sch.ds").must.be.eq(["sch", "ds"]);
+  //   });
+  //
+  //   test("destructureQn(qn) - sch", function() {
+  //     db.destructureDataStoreQn.must.raise("Invalid qualified name.", ["sch"]);
+  //   });
+  //
+  //   test("destructureQn(qn) - sch.", function() {
+  //     db.destructureDataStoreQn.must.raise("Invalid qualified name.", ["sch."]);
+  //   });
+  //
+  //   test("destructureQn(qn) - .ds", function() {
+  //     db.destructureDataStoreQn.must.raise("Invalid qualified name.", [".ds"]);
+  //   });
+  // });
 })();
