@@ -1,4 +1,4 @@
-"use strict";Object.defineProperty(exports, "__esModule", { value: true });var _createClass = function () {function defineProperties(target, props) {for (var i = 0; i < props.length; i++) {var descriptor = props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if ("value" in descriptor) descriptor.writable = true;Object.defineProperty(target, descriptor.key, descriptor);}}return function (Constructor, protoProps, staticProps) {if (protoProps) defineProperties(Constructor.prototype, protoProps);if (staticProps) defineProperties(Constructor, staticProps);return Constructor;};}();
+"use strict";Object.defineProperty(exports, "__esModule", { value: true });var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) {return typeof obj;} : function (obj) {return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj;};var _createClass = function () {function defineProperties(target, props) {for (var i = 0; i < props.length; i++) {var descriptor = props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if ("value" in descriptor) descriptor.writable = true;Object.defineProperty(target, descriptor.key, descriptor);}}return function (Constructor, protoProps, staticProps) {if (protoProps) defineProperties(Constructor.prototype, protoProps);if (staticProps) defineProperties(Constructor, staticProps);return Constructor;};}();
 var _Namespace = require("./Namespace");var _Namespace2 = _interopRequireDefault(_Namespace);
 var _sync = require("./sync");var _sync2 = _interopRequireDefault(_sync);function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function _classCallCheck(instance, Constructor) {if (!(instance instanceof Constructor)) {throw new TypeError("Cannot call a class as a function");}}var 
 
@@ -300,6 +300,63 @@ DataStore = function () {
 
 
     {
+      throw new Error("Abstract method.");} }, { key: "save", value: function save(
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    doc) {var _this4 = this;
+      var opts, callback;for (var _len3 = arguments.length, args = Array(_len3 > 1 ? _len3 - 1 : 0), _key3 = 1; _key3 < _len3; _key3++) {args[_key3 - 1] = arguments[_key3];}
+
+
+      if (args.length == 1) {
+        if (_typeof(args[0]) == "object") opts = args[0];else 
+        callback = args[0];} else 
+      if (args.length >= 2) {
+        opts = args[0];callback = args[1];}
+
+
+      if (!opts) opts = {};
+
+
+      if (this.hasInjection()) query = this.injectInto(query);
+
+
+      if (!doc.hasOwnProperty("id")) throw new Error("id field must be indicated.");
+
+
+      if (this.sync) return (0, _sync2.default)(function (done) {return _this4._save(doc, opts, done);});else 
+      this._update(doc, opts, callback || function () {});} }, { key: "_save", value: function _save() 
+
+
+
+
+
+
+
+
+
+
+
+
+    {
       throw new Error("Abstract method.");} }, { key: "remove", value: function remove() 
 
 
@@ -333,8 +390,8 @@ DataStore = function () {
 
 
 
-    {var _this4 = this;
-      var opts, callback;for (var _len3 = arguments.length, args = Array(_len3), _key3 = 0; _key3 < _len3; _key3++) {args[_key3] = arguments[_key3];}
+    {var _this5 = this;
+      var opts, callback;for (var _len4 = arguments.length, args = Array(_len4), _key4 = 0; _key4 < _len4; _key4++) {args[_key4] = arguments[_key4];}
 
 
       if (args.length == 1) {
@@ -345,7 +402,7 @@ DataStore = function () {
 
 
 
-      if (this.sync) return (0, _sync2.default)(function (done) {return _this4._truncate(opts, done);});else 
+      if (this.sync) return (0, _sync2.default)(function (done) {return _this5._truncate(opts, done);});else 
       this._truncate(opts, callback || function () {});} }, { key: "_truncate", value: function _truncate(
 
 

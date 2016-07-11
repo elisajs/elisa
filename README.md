@@ -596,6 +596,7 @@ The update object is similar to MongoDB and to Mango:
 - `{field: {$mul: value}}`. Multiply the value.
 - `{field: {$div: value}}`. Divide the value.
 - `{field: {$add: value}}`. Add an item to an array if the value doesn't exist.
+- `{field: {$remove: value}}`. Remove the value from the field.
 - `{field: {$push: value}}`. Add an item at the end of an array.
 - `{field: {$concat: value}}`. Concatenate a string at the end of another.
 - `{field: {$pop: value}}`. Remove the given number of items.
@@ -615,6 +616,25 @@ Examples of operations:
 //add to set
 {tags: {$add: "indie"}}
 ```
+
+## Saving items
+
+Another way to save a document into a key-value store is using the `save()` method:
+
+```
+//sync connection
+store.save(doc : object);
+store.save(doc : object, opts : object);
+
+//async connection
+store.save(doc : object, callback ?: function(error));
+store.save(doc : object, opts : object, callback ?: function(error));
+```
+
+When the `save()` method is used, the document must have an `id` field. When the
+`id` exists, the document is replaced; otherwise, it is inserted.
+
+This method implements a UPSERT operation.
 
 ## Removing items
 
@@ -811,8 +831,8 @@ The filter object sets a condition to restrict the documents to return. The oper
 - `{field: {$nbetween: [start, end]}}`. The field value is not between two. Alias: `$notBetween`.
 - `{field: {$like: value}}`. The field matches a pattern.
 - `{field: {$nlike: value}}`. The field doesn't match a pattern. Alias: `$notLike`.
-- `{field: {$contain: value}}`. The field contains a value.
-- `{field: {$ncontain: value}}`. The field doesn't contain a value. Alias: `$notContain`.
+- `{field: {$contains: value}}`. The field contains a value. Alias: `$contain`.
+- `{field: {$ncontains: value}}`. The field doesn't contain a value. Alias: `$ncontains`, `$notContain` and `$notContains`.
 - `{field: {$in: value}}`. The field is into an array value.
 - `{field: {$nin: value}}`. The field is not into an array value. Alias: `$notIn`.
 
@@ -854,6 +874,10 @@ bands.update({name: "The National"}, {year: 1999, origin: "Cincinnati, Ohio"}, f
   ...
 });
 ```
+
+## Saving documents
+
+Similar to `Store.save()`.
 
 ## Removing documents
 
