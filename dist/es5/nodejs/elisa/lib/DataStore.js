@@ -343,7 +343,7 @@ DataStore = function () {
 
 
       if (this.sync) return (0, _sync2.default)(function (done) {return _this4._save(doc, opts, done);});else 
-      this._update(doc, opts, callback || function () {});} }, { key: "_save", value: function _save() 
+      this._save(doc, opts, callback || function () {});} }, { key: "_save", value: function _save() 
 
 
 
