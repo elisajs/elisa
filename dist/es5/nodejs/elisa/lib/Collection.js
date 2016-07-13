@@ -55,14 +55,63 @@ Collection = function (_DataStore) {_inherits(Collection, _DataStore);function C
 
 
     {var _q2;
-      return (_q2 = this.q()).findOne.apply(_q2, arguments);} }, { key: "insert", value: function insert(
+      return (_q2 = this.q()).findOne.apply(_q2, arguments);} }, { key: "findAll", value: function findAll() 
 
 
 
 
 
-    docs) {var _this2 = this;
-      var opts, callback;for (var _len = arguments.length, args = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {args[_key - 1] = arguments[_key];}
+
+
+
+
+
+
+
+
+    {var _this2 = this;
+      var opts, callback;for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {args[_key] = arguments[_key];}
+
+
+      if (args.length == 1) {
+        if (args[0] instanceof Function) callback = args[0];else 
+        opts = args[0];} else 
+      if (args.length >= 2) {
+        opts = args[0];callback = args[1];}
+
+
+      if (!opts) opts = {};
+
+
+      if (this.hasInjection()) {
+        return this.find({}, opts, callback);} else 
+      {
+        if (this.sync) {
+          return (0, _sync2.default)(function (done) {return _this2._findAll(opts, done);});} else 
+        if (this.async) {
+          if (!callback) throw new Error("Callback expected.");
+          this._findAll(opts, callback);}}} }, { key: "_findAll", value: function _findAll() 
+
+
+
+
+
+
+
+
+
+
+
+
+    {
+      throw new Error("Abstract method.");} }, { key: "insert", value: function insert(
+
+
+
+
+
+    docs) {var _this3 = this;
+      var opts, callback;for (var _len2 = arguments.length, args = Array(_len2 > 1 ? _len2 - 1 : 0), _key2 = 1; _key2 < _len2; _key2++) {args[_key2 - 1] = arguments[_key2];}
 
 
       if (args.length == 1) {
@@ -85,7 +134,7 @@ Collection = function (_DataStore) {_inherits(Collection, _DataStore);function C
 
 
 
-      if (this.sync) return (0, _sync2.default)(function (done) {return _this2._insert(docs, opts, done);});else 
+      if (this.sync) return (0, _sync2.default)(function (done) {return _this3._insert(docs, opts, done);});else 
       this._insert(docs, opts, callback || function () {});} }, { key: "_insert", value: function _insert() 
 
 
@@ -112,8 +161,65 @@ Collection = function (_DataStore) {_inherits(Collection, _DataStore);function C
 
 
 
-    query, updt) {var _this3 = this;
-      var opts, callback;for (var _len2 = arguments.length, args = Array(_len2 > 2 ? _len2 - 2 : 0), _key2 = 2; _key2 < _len2; _key2++) {args[_key2 - 2] = arguments[_key2];}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    query, updt) {var _this4 = this;
+      var opts, callback;for (var _len3 = arguments.length, args = Array(_len3 > 2 ? _len3 - 2 : 0), _key3 = 2; _key3 < _len3; _key3++) {args[_key3 - 2] = arguments[_key3];}
 
 
       if (args.length == 1) {
@@ -129,7 +235,7 @@ Collection = function (_DataStore) {_inherits(Collection, _DataStore);function C
       if (this.hasInjection()) query = this.injectInto(query);
 
 
-      if (this.sync) return (0, _sync2.default)(function (done) {return _this3._update(query, updt, opts, done);});else 
+      if (this.sync) return (0, _sync2.default)(function (done) {return _this4._update(query, updt, opts, done);});else 
       this._update(query, updt, opts, callback || function () {});} }, { key: "_update", value: function _update() 
 
 
@@ -152,8 +258,8 @@ Collection = function (_DataStore) {_inherits(Collection, _DataStore);function C
 
 
 
-    query) {var _this4 = this;
-      var opts, callback, nop;for (var _len3 = arguments.length, args = Array(_len3 > 1 ? _len3 - 1 : 0), _key3 = 1; _key3 < _len3; _key3++) {args[_key3 - 1] = arguments[_key3];}
+    query) {var _this5 = this;
+      var opts, callback, nop;for (var _len4 = arguments.length, args = Array(_len4 > 1 ? _len4 - 1 : 0), _key4 = 1; _key4 < _len4; _key4++) {args[_key4 - 1] = arguments[_key4];}
 
 
       if (args.length == 1) {
@@ -174,7 +280,7 @@ Collection = function (_DataStore) {_inherits(Collection, _DataStore);function C
 
       if (this.sync) {
         if (nop) return;else 
-        return (0, _sync2.default)(function (done) {return _this4._remove(query, opts, done);});} else 
+        return (0, _sync2.default)(function (done) {return _this5._remove(query, opts, done);});} else 
       {
         if (nop) process.nextTick(function () {if (callback) callback();});else 
         this._remove(query, opts, callback || function () {});}} }, { key: "_remove", value: function _remove() 
@@ -191,4 +297,33 @@ Collection = function (_DataStore) {_inherits(Collection, _DataStore);function C
 
 
     {
-      throw new Error("Abstract method.");} }]);return Collection;}(_DataStore3.default);exports.default = Collection;
+      throw new Error("Abstract method.");} }, { key: "truncate", value: function truncate() 
+
+
+
+
+
+
+
+
+
+
+
+
+    {var _this6 = this;
+      var opts, callback;for (var _len5 = arguments.length, args = Array(_len5), _key5 = 0; _key5 < _len5; _key5++) {args[_key5] = arguments[_key5];}
+
+
+      if (args.length == 1) {
+        if (args[0] instanceof Function) callback = args[0];else 
+        opts = args[0];} else 
+      if (args.length >= 2) {
+        opts = args[0];callback = args[1];}
+
+
+
+      if (this.hasInjection()) {
+        return this.remove({}, opts, callback);} else 
+      {
+        if (this.sync) return (0, _sync2.default)(function (done) {return _this6._truncate(opts, done);});else 
+        this._truncate(opts, callback || function () {});}} }]);return Collection;}(_DataStore3.default);exports.default = Collection;

@@ -1056,9 +1056,9 @@ q.project("name").find({tags: {$contain: "indie"}}, function(error, res) {
 
 *Elisa* allows to inject fields/columns to the data store queries:
 
-- Stores into `insert()`. Remember that the finds, the updates and the removes are always using the
+- Stores into `insert()` and `save()`. Remember that the finds, the updates and the removes are always using the
   `id` field, for this reason, the injection not needed.
-- Collections into `find()`, `findOne()`, `insert()`, `update()` and `remove()`.
+- Collections into `find()`, `findOne()`, `findAll()`, `insert()`, `save()`, `update()`, `remove()` and `truncate()`.
 
 The injection is indicated in `getStore()`, `findStore()`, `getCollection()` or `findCollection()`,
 using the `inject` option:

@@ -261,14 +261,17 @@ Database = function () {
 
 
     {
-      var ns, coll, opts;for (var _len5 = arguments.length, args = Array(_len5), _key5 = 0; _key5 < _len5; _key5++) {args[_key5] = arguments[_key5];}var _destructureDataStore = 
+      var ns, ds, opts;for (var _len5 = arguments.length, args = Array(_len5), _key5 = 0; _key5 < _len5; _key5++) {args[_key5] = arguments[_key5];}var _parseDataStoreArgs7 = 
 
 
-      destructureDataStoreQn(args);var _destructureDataStore2 = _slicedToArray(_destructureDataStore, 3);ns = _destructureDataStore2[0];coll = _destructureDataStore2[1];opts = _destructureDataStore2[2];
+      parseDataStoreArgs(args);var _parseDataStoreArgs8 = _slicedToArray(_parseDataStoreArgs7, 3);ns = _parseDataStoreArgs8[0];ds = _parseDataStoreArgs8[1];opts = _parseDataStoreArgs8[2];
 
 
-      if (ns) return this.getNamespace(ns, opts).getCollection(coll, opts);else 
-      return new (this.connection.getCollectionClass())(this, coll, opts);} }, { key: "hasCollection", value: function hasCollection() 
+      if (ns) ds = this.getNamespace(ns, opts).getCollection(ds, opts);else 
+      ds = new (this.connection.getCollectionClass())(this, ds, opts);
+
+
+      return ds;} }, { key: "hasCollection", value: function hasCollection() 
 
 
 
@@ -293,21 +296,21 @@ Database = function () {
 
 
     {
-      var ns, coll, opts, callback, res;for (var _len6 = arguments.length, args = Array(_len6), _key6 = 0; _key6 < _len6; _key6++) {args[_key6] = arguments[_key6];}var _parseDataStoreArgs7 = 
+      var ns, ds, opts, callback, res;for (var _len6 = arguments.length, args = Array(_len6), _key6 = 0; _key6 < _len6; _key6++) {args[_key6] = arguments[_key6];}var _parseDataStoreArgs9 = 
 
 
-      parseDataStoreArgs(args);var _parseDataStoreArgs8 = _slicedToArray(_parseDataStoreArgs7, 4);ns = _parseDataStoreArgs8[0];coll = _parseDataStoreArgs8[1];opts = _parseDataStoreArgs8[2];callback = _parseDataStoreArgs8[3];
+      parseDataStoreArgs(args);var _parseDataStoreArgs10 = _slicedToArray(_parseDataStoreArgs9, 4);ns = _parseDataStoreArgs10[0];ds = _parseDataStoreArgs10[1];opts = _parseDataStoreArgs10[2];callback = _parseDataStoreArgs10[3];
 
 
       if (ns) {
-        return this.getNamespace(ns).hasCollection(coll, callback);} else 
+        return this.getNamespace(ns).hasCollection(ds, callback);} else 
       {
         if (this.sync) {
-          return !!this.findCollection(coll);} else 
+          return !!this.findCollection(ds);} else 
         {
-          this.findCollection(name, function (error, coll) {
+          this.findCollection(ds, function (error, ds) {
             if (error) callback(error);else 
-            callback(undefined, !!coll);});}}} }, { key: "findCollection", value: function findCollection() 
+            callback(undefined, !!ds);});}}} }, { key: "findCollection", value: function findCollection() 
 
 
 
@@ -339,17 +342,17 @@ Database = function () {
 
 
     {var _this4 = this;
-      var ns, coll, opts, callback;for (var _len7 = arguments.length, args = Array(_len7), _key7 = 0; _key7 < _len7; _key7++) {args[_key7] = arguments[_key7];}var _parseDataStoreArgs9 = 
+      var ns, ds, opts, callback;for (var _len7 = arguments.length, args = Array(_len7), _key7 = 0; _key7 < _len7; _key7++) {args[_key7] = arguments[_key7];}var _parseDataStoreArgs11 = 
 
 
-      parseDataStoreArgs(args);var _parseDataStoreArgs10 = _slicedToArray(_parseDataStoreArgs9, 4);ns = _parseDataStoreArgs10[0];coll = _parseDataStoreArgs10[1];opts = _parseDataStoreArgs10[2];callback = _parseDataStoreArgs10[3];
+      parseDataStoreArgs(args);var _parseDataStoreArgs12 = _slicedToArray(_parseDataStoreArgs11, 4);ns = _parseDataStoreArgs12[0];ds = _parseDataStoreArgs12[1];opts = _parseDataStoreArgs12[2];callback = _parseDataStoreArgs12[3];
 
 
       if (ns) {
-        return this.getNamespace(ns, opts).findCollection(coll, opts, callback);} else 
+        return this.getNamespace(ns, opts).findCollection(ds, opts, callback);} else 
       {
-        if (this.sync) return (0, _sync2.default)(function (done) {return _this4._findCollection(coll, opts, done);});else 
-        this._findCollection(coll, opts, callback);}} }, { key: "_findCollection", value: function _findCollection(
+        if (this.sync) return (0, _sync2.default)(function (done) {return _this4._findCollection(ds, opts, done);});else 
+        this._findCollection(ds, opts, callback);}} }, { key: "_findCollection", value: function _findCollection(
 
 
 
@@ -375,20 +378,20 @@ function parseDataStoreArgs(args) {
   var ns, ds, opts, callback;
 
 
-  if (args.length == 1) {var _destructureDataStore3 = 
-    destructureDataStoreQn(args[0]);var _destructureDataStore4 = _slicedToArray(_destructureDataStore3, 2);ns = _destructureDataStore4[0];ds = _destructureDataStore4[1];} else 
+  if (args.length == 1) {var _destructureDataStore = 
+    destructureDataStoreQn(args[0]);var _destructureDataStore2 = _slicedToArray(_destructureDataStore, 2);ns = _destructureDataStore2[0];ds = _destructureDataStore2[1];} else 
   if (args.length == 2) {
     if (typeof args[1] == "string") {var _args = _slicedToArray(
       args, 2);ns = _args[0];ds = _args[1];} else 
-    {var _destructureDataStore5 = 
-      destructureDataStoreQn(args[0]);var _destructureDataStore6 = _slicedToArray(_destructureDataStore5, 2);ns = _destructureDataStore6[0];ds = _destructureDataStore6[1];
+    {var _destructureDataStore3 = 
+      destructureDataStoreQn(args[0]);var _destructureDataStore4 = _slicedToArray(_destructureDataStore3, 2);ns = _destructureDataStore4[0];ds = _destructureDataStore4[1];
 
       if (args[1] instanceof Function) callback = args[1];else 
       opts = args[1];}} else 
 
   if (args.length == 3) {
-    if (_typeof(args[1]) == "object") {var _destructureDataStore7 = 
-      destructureDataStoreQn(args[0]);var _destructureDataStore8 = _slicedToArray(_destructureDataStore7, 2);ns = _destructureDataStore8[0];ds = _destructureDataStore8[1];var _args$slice = 
+    if (_typeof(args[1]) == "object") {var _destructureDataStore5 = 
+      destructureDataStoreQn(args[0]);var _destructureDataStore6 = _slicedToArray(_destructureDataStore5, 2);ns = _destructureDataStore6[0];ds = _destructureDataStore6[1];var _args$slice = 
       args.slice(1);var _args$slice2 = _slicedToArray(_args$slice, 2);opts = _args$slice2[0];callback = _args$slice2[1];} else 
     if (_typeof(args[2]) == "object") {var _args2 = _slicedToArray(
       args, 3);ns = _args2[0];ds = _args2[1];opts = _args2[2];} else 

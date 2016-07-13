@@ -200,51 +200,6 @@ DataStore = function () {
 
 
     {
-      throw new Error("Abstract method.");} }, { key: "findAll", value: function findAll() 
-
-
-
-
-
-
-
-
-
-
-
-
-
-    {var _this3 = this;
-      var opts, callback;for (var _len2 = arguments.length, args = Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {args[_key2] = arguments[_key2];}
-
-
-      if (args.length == 1) {
-        if (args[0] instanceof Function) callback = args[0];else 
-        opts = args[0];} else 
-      if (args.length >= 2) {
-        opts = args[0];callback = args[1];}
-
-
-      if (!opts) opts = {};
-
-
-      if (this.sync) {
-        return (0, _sync2.default)(function (done) {return _this3._findAll(opts, done);});} else 
-      if (this.async) {
-        if (!callback) throw new Error("Callback expected.");
-        this._findAll(opts, callback);}} }, { key: "_findAll", value: function _findAll() 
-
-
-
-
-
-
-
-
-
-
-
-    {
       throw new Error("Abstract method.");} }, { key: "insert", value: function insert(
 
 
@@ -280,26 +235,6 @@ DataStore = function () {
 
 
     docs) {
-      throw new Error("Abstract method.");} }, { key: "update", value: function update() 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    {
       throw new Error("Abstract method.");} }, { key: "save", value: function save(
 
 
@@ -322,8 +257,8 @@ DataStore = function () {
 
 
 
-    doc) {var _this4 = this;
-      var opts, callback;for (var _len3 = arguments.length, args = Array(_len3 > 1 ? _len3 - 1 : 0), _key3 = 1; _key3 < _len3; _key3++) {args[_key3 - 1] = arguments[_key3];}
+    doc) {var _this3 = this;
+      var opts, callback;for (var _len2 = arguments.length, args = Array(_len2 > 1 ? _len2 - 1 : 0), _key2 = 1; _key2 < _len2; _key2++) {args[_key2 - 1] = arguments[_key2];}
 
 
       if (args.length == 1) {
@@ -336,14 +271,34 @@ DataStore = function () {
       if (!opts) opts = {};
 
 
-      if (this.hasInjection()) query = this.injectInto(query);
+      if (this.hasInjection()) doc = this.injectInto(doc);
 
 
       if (!doc.hasOwnProperty("id")) throw new Error("id field must be indicated.");
 
 
-      if (this.sync) return (0, _sync2.default)(function (done) {return _this4._save(doc, opts, done);});else 
+      if (this.sync) return (0, _sync2.default)(function (done) {return _this3._save(doc, opts, done);});else 
       this._save(doc, opts, callback || function () {});} }, { key: "_save", value: function _save() 
+
+
+
+
+
+
+
+
+
+
+
+
+    {
+      throw new Error("Abstract method.");} }, { key: "update", value: function update() 
+
+
+
+
+
+
 
 
 
@@ -377,42 +332,4 @@ DataStore = function () {
 
 
     {
-      throw new Error("Abstract method.");} }, { key: "truncate", value: function truncate() 
-
-
-
-
-
-
-
-
-
-
-
-
-    {var _this5 = this;
-      var opts, callback;for (var _len4 = arguments.length, args = Array(_len4), _key4 = 0; _key4 < _len4; _key4++) {args[_key4] = arguments[_key4];}
-
-
-      if (args.length == 1) {
-        if (args[0] instanceof Function) callback = args[0];else 
-        opts = args[0];} else 
-      if (args.length >= 2) {
-        opts = args[0];callback = args[1];}
-
-
-
-      if (this.sync) return (0, _sync2.default)(function (done) {return _this5._truncate(opts, done);});else 
-      this._truncate(opts, callback || function () {});} }, { key: "_truncate", value: function _truncate(
-
-
-
-
-
-
-
-
-
-
-    opts, callback) {
       throw new Error("Abstract method.");} }, { key: "ns", get: function get() {return this.namespace;} }, { key: "client", get: function get() {return this.connection.client;} }, { key: "db", get: function get() {return this.database;} }, { key: "connection", get: function get() {return this.db.connection;} }, { key: "qualifiedName", get: function get() {return (this.ns ? this.ns.qn + "." : "") + this.name;} }, { key: "qn", get: function get() {return this.qualifiedName;} }, { key: "fullQualifiedName", get: function get() {return (this.ns ? this.ns.fqn : this.db.name) + "." + this.name;} }, { key: "fqn", get: function get() {return this.fullQualifiedName;} }]);return DataStore;}();exports.default = DataStore;

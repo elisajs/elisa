@@ -183,6 +183,7 @@ CollectionQuery = function () {
 
 
       if (query) this.filter(query);
+      this.limit(1);
 
 
       if (this.sync) {

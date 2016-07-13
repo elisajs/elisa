@@ -5,7 +5,52 @@ var _DataStore2 = require("./DataStore");var _DataStore3 = _interopRequireDefaul
 
 
 
-Store = function (_DataStore) {_inherits(Store, _DataStore);function Store() {_classCallCheck(this, Store);return _possibleConstructorReturn(this, Object.getPrototypeOf(Store).apply(this, arguments));}_createClass(Store, [{ key: "find", value: function find() 
+Store = function (_DataStore) {_inherits(Store, _DataStore);function Store() {_classCallCheck(this, Store);return _possibleConstructorReturn(this, Object.getPrototypeOf(Store).apply(this, arguments));}_createClass(Store, [{ key: "findAll", value: function findAll() 
+
+
+
+
+
+
+
+
+
+
+
+    {var _this2 = this;
+      var opts, callback;for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {args[_key] = arguments[_key];}
+
+
+      if (args.length == 1) {
+        if (args[0] instanceof Function) callback = args[0];else 
+        opts = args[0];} else 
+      if (args.length >= 2) {
+        opts = args[0];callback = args[1];}
+
+
+      if (!opts) opts = {};
+
+
+      if (this.sync) {
+        return (0, _sync2.default)(function (done) {return _this2._findAll(opts, done);});} else 
+      if (this.async) {
+        if (!callback) throw new Error("Callback expected.");
+        this._findAll(opts, callback);}} }, { key: "_findAll", value: function _findAll() 
+
+
+
+
+
+
+
+
+
+
+
+    {
+      throw new Error("Abstract method.");} }, { key: "find", value: function find() 
+
+
 
 
 
@@ -26,8 +71,8 @@ Store = function (_DataStore) {_inherits(Store, _DataStore);function Store() {_c
 
 
 
-    query) {var _this2 = this;
-      var opts, callback;for (var _len = arguments.length, args = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {args[_key - 1] = arguments[_key];}
+    query) {var _this3 = this;
+      var opts, callback;for (var _len2 = arguments.length, args = Array(_len2 > 1 ? _len2 - 1 : 0), _key2 = 1; _key2 < _len2; _key2++) {args[_key2 - 1] = arguments[_key2];}
 
 
       if (args.length == 1) {
@@ -41,7 +86,7 @@ Store = function (_DataStore) {_inherits(Store, _DataStore);function Store() {_c
       if (!query.id) throw new Error("Id field expected.");
 
 
-      if (this.sync) return (0, _sync2.default)(function (done) {return _this2._findOne(query, opts, done);});else 
+      if (this.sync) return (0, _sync2.default)(function (done) {return _this3._findOne(query, opts, done);});else 
       this._findOne(query, opts, callback);} }, { key: "_findOne", value: function _findOne() 
 
 
@@ -61,8 +106,8 @@ Store = function (_DataStore) {_inherits(Store, _DataStore);function Store() {_c
 
 
 
-    docs) {var _this3 = this;
-      var opts, callback;for (var _len2 = arguments.length, args = Array(_len2 > 1 ? _len2 - 1 : 0), _key2 = 1; _key2 < _len2; _key2++) {args[_key2 - 1] = arguments[_key2];}
+    docs) {var _this4 = this;
+      var opts, callback;for (var _len3 = arguments.length, args = Array(_len3 > 1 ? _len3 - 1 : 0), _key3 = 1; _key3 < _len3; _key3++) {args[_key3 - 1] = arguments[_key3];}
 
 
       if (args.length == 1) {
@@ -88,7 +133,7 @@ Store = function (_DataStore) {_inherits(Store, _DataStore);function Store() {_c
 
 
 
-      if (this.sync) (0, _sync2.default)(function (done) {return _this3._insert(docs, opts, done);});else 
+      if (this.sync) (0, _sync2.default)(function (done) {return _this4._insert(docs, opts, done);});else 
       this._insert(docs, opts, callback || function () {});} }, { key: "_insert", value: function _insert() 
 
 
@@ -115,8 +160,8 @@ Store = function (_DataStore) {_inherits(Store, _DataStore);function Store() {_c
 
 
 
-    query, updt) {var _this4 = this;
-      var opts, callback;for (var _len3 = arguments.length, args = Array(_len3 > 2 ? _len3 - 2 : 0), _key3 = 2; _key3 < _len3; _key3++) {args[_key3 - 2] = arguments[_key3];}
+    query, updt) {var _this5 = this;
+      var opts, callback;for (var _len4 = arguments.length, args = Array(_len4 > 2 ? _len4 - 2 : 0), _key4 = 2; _key4 < _len4; _key4++) {args[_key4 - 2] = arguments[_key4];}
 
 
       if (args.length == 1) {
@@ -130,7 +175,7 @@ Store = function (_DataStore) {_inherits(Store, _DataStore);function Store() {_c
       if (!query.id) throw new Error("Id field expected.");
 
 
-      if (this.sync) return (0, _sync2.default)(function (done) {return _this4._update(query, updt, opts, done);});else 
+      if (this.sync) return (0, _sync2.default)(function (done) {return _this5._update(query, updt, opts, done);});else 
       this._update(query, updt, opts, callback || function () {});} }, { key: "_update", value: function _update() 
 
 
@@ -153,8 +198,8 @@ Store = function (_DataStore) {_inherits(Store, _DataStore);function Store() {_c
 
 
 
-    query) {var _this5 = this;
-      var opts, callback, nop;for (var _len4 = arguments.length, args = Array(_len4 > 1 ? _len4 - 1 : 0), _key4 = 1; _key4 < _len4; _key4++) {args[_key4 - 1] = arguments[_key4];}
+    query) {var _this6 = this;
+      var opts, callback, nop;for (var _len5 = arguments.length, args = Array(_len5 > 1 ? _len5 - 1 : 0), _key5 = 1; _key5 < _len5; _key5++) {args[_key5 - 1] = arguments[_key5];}
 
 
       if (args.length == 1) {
@@ -172,7 +217,7 @@ Store = function (_DataStore) {_inherits(Store, _DataStore);function Store() {_c
 
       if (this.sync) {
         if (nop) return;else 
-        return (0, _sync2.default)(function (done) {return _this5._remove(query, opts, done);});} else 
+        return (0, _sync2.default)(function (done) {return _this6._remove(query, opts, done);});} else 
       {
         if (nop) process.nextTick(function () {if (callback) callback();});else 
         this._remove(query, opts, callback || function () {});}} }, { key: "_remove", value: function _remove() 
@@ -189,4 +234,42 @@ Store = function (_DataStore) {_inherits(Store, _DataStore);function Store() {_c
 
 
     {
+      throw new Error("Abstract method.");} }, { key: "truncate", value: function truncate() 
+
+
+
+
+
+
+
+
+
+
+
+
+    {var _this7 = this;
+      var opts, callback;for (var _len6 = arguments.length, args = Array(_len6), _key6 = 0; _key6 < _len6; _key6++) {args[_key6] = arguments[_key6];}
+
+
+      if (args.length == 1) {
+        if (args[0] instanceof Function) callback = args[0];else 
+        opts = args[0];} else 
+      if (args.length >= 2) {
+        opts = args[0];callback = args[1];}
+
+
+
+      if (this.sync) return (0, _sync2.default)(function (done) {return _this7._truncate(opts, done);});else 
+      this._truncate(opts, callback || function () {});} }, { key: "_truncate", value: function _truncate(
+
+
+
+
+
+
+
+
+
+
+    opts, callback) {
       throw new Error("Abstract method.");} }]);return Store;}(_DataStore3.default);exports.default = Store;
