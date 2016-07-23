@@ -1,6 +1,6 @@
 {
   "name": "elisa",
-  "version": "0.5.2",
+  "version": "0.5.3",
   "description": "API for connecting to databases on Node.js and browser.",
   "homepage": "http://elisajs.org",
   "author": {

@@ -38,4 +38,13 @@ Result = function () {
 
 
     doc) {
-      this.docs.push(doc);} }, { key: "rows", get: function get() {return this.docs;} }, { key: "length", get: function get() {return this.docs.length;} }, { key: "size", get: function get() {return this.length;} }]);return Result;}();exports.default = Result;
+      this.docs.push(doc);} }, { key: "random", value: function random() 
+
+
+
+
+
+
+
+    {
+      return this.docs[Math.floor(Math.random() * this.length)];} }, { key: "rows", get: function get() {return this.docs;} }, { key: "length", get: function get() {return this.docs.length;} }, { key: "size", get: function get() {return this.length;} }]);return Result;}();exports.default = Result;
